@@ -21,4 +21,12 @@ public class Fornecedores {
 		this.descricao = descricao;
 	}
 
+	public String toString() {
+
+		String saida = codigo + " - " + descricao;
+
+		return saida;
+
+	}
+
 }
