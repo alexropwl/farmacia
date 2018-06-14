@@ -100,15 +100,43 @@ public class FornecedoresDAO {
 			Fornecedores f = new Fornecedores();
 			f.setCodigo(rs.getInt("codigo"));
 			f.setDescricao(rs.getString("descricao"));
-             
-			
+
 			lista.add(f);
-			
-		
+
 		}
 
-		
 		return lista;
+	}
+
+	public ArrayList<Fornecedores> buscarPorDescricao(Fornecedores fornecedores) throws SQLException {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT codigo, descricao ");
+		sql.append("FROM fornecedores ");
+		sql.append("WHERE descricao LIKE ? ");
+		sql.append("ORDER BY descricao ASC ");
+
+		Connection conexao = Conexao.conectar();
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+
+		comando.setString(1, "%" + fornecedores.getDescricao() + "%");
+
+		ResultSet rs = comando.executeQuery();
+
+		ArrayList<Fornecedores> lista = new ArrayList<Fornecedores>();
+
+		while (rs.next()) {
+
+			Fornecedores item = new Fornecedores();
+			item.setCodigo(rs.getInt("codigo"));
+			item.setDescricao(rs.getString("descricao"));
+
+			lista.add(item);
+
+		}
+
+		return lista;
+
 	}
 
 	public static void main(String[] args) throws SQLException {
@@ -140,37 +168,50 @@ public class FornecedoresDAO {
 		 * edicao");
 		 * 
 		 * }
-		 
+		 * 
+		 * 
+		 * Fornecedores f = new Fornecedores(); f.setCodigo(4); FornecedoresDAO fd = new
+		 * FornecedoresDAO();
+		 * 
+		 * try { Fornecedores f3 = fd.buscaPorCodigo(f); System.out.println("Codigo
+		 * encontrado " + f3);
+		 * 
+		 * } catch (Exception e) {
+		 * 
+		 * e.printStackTrace(); System.out.println("erro na busca");
+		 * 
+		 * }
+		 * 
+		 * 
+		 * FornecedoresDAO f = new FornecedoresDAO();
+		 * 
+		 * try { ArrayList<Fornecedores> lista = f.listar();
+		 * 
+		 * for (Fornecedores f1 : lista) { System.out.println("Listagem " + f1); }
+		 * 
+		 * } catch (Exception e) { System.out.println("Erro na busca");
+		 * 
+		 * }
+		 **/
 
-		Fornecedores f = new Fornecedores();
-		f.setCodigo(4);
+		Fornecedores f1 = new Fornecedores();
+		f1.setDescricao("al");
 		FornecedoresDAO fd = new FornecedoresDAO();
 
 		try {
-			Fornecedores f3 = fd.buscaPorCodigo(f);
-			System.out.println("Codigo encontrado " + f3);
+
+			ArrayList<Fornecedores> lista = fd.buscarPorDescricao(f1);
+
+			for (Fornecedores f : lista) {
+
+				System.out.println("Resultado" + f);
+
+			}
 
 		} catch (Exception e) {
-
 			e.printStackTrace();
-			System.out.println("erro na busca");
-
-		} **/
-		
-		
-		FornecedoresDAO f = new FornecedoresDAO();
-		
-		try {
-			ArrayList<Fornecedores>lista = f.listar();
-			
-			for(Fornecedores f1 : lista) {
-			System.out.println("Listagem " + f1);
-		}
-			
-		}catch(Exception e) {
 			System.out.println("Erro na busca");
-			
-			
+
 		}
 
 	}
