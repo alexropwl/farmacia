@@ -19,7 +19,9 @@
 	
 	<p:dataTable id="tbfornecedores" emptyMessage="Sem registros no momento" value="#{MBFornecedores.itens}" var="item" paginator="true"
 	
-	rows="100" >
+	rows="10" filteredValue="#{MBFornecedores.itensfiltrados}"
+	
+	widgetVar="tabelaFornecedores" >
 	
 	<f:facet name="header">Lista de Fornecedores</f:facet>
    
@@ -34,6 +36,26 @@
         <h:outputText value="#{item.descricao}" />
         
     </p:column>
+     
+     <p:column headerText="Excluir">
+     <p:commandButton icon="ui-icon-trash"  oncomplete="PF('dlgforExcluir').show(); "
+		      update=":frmforexcluir:pnforexcluir" >
+		      
+		      <f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"></f:setPropertyActionListener>
+		      
+		      </p:commandButton>       
+    
+    </p:column>
+    
+    <p:column headerText="Editar">
+     <p:commandButton icon="ui-icon-pencil"  oncomplete="PF('dlgforEditar').show(); "
+		      update=":frmforeditar:pnforeditar">
+		      
+		      <f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"></f:setPropertyActionListener>
+		      
+		      </p:commandButton>       
+    
+    </p:column>
  
     <f:facet name="footer"><p:commandButton value="Novo" actionListener="#{MBFornecedores.preparanovo}"
      oncomplete="PF('dlgfornovo').show()" update=":frmfornovo:pnfornovo"  /></f:facet>
@@ -42,7 +64,7 @@
 	  
 	  </h:form>
 	
-	<p:dialog widgetVar="dlgfornovo" closable="false" draggable="false" resizable="false" header="Cadastrar Fornecedores"
+	<p:dialog widgetVar="dlgfornovo" closable="false" draggable="false" resizable="false" header="Adicionar Fornecedores"
 	modal="true" appendTo="@(body)">
 	
 	    <h:form id="frmfornovo">
@@ -52,7 +74,8 @@
 	       </h:panelGrid>
 	        
 	        <h:panelGrid columns="2">
-	         <p:commandButton value="Gravar" actionListener="#{MBFornecedores.novo}" onclick="PF('dLgfornovo').hide();" 
+	         <p:commandButton value="Gravar" actionListener="#{MBFornecedores.novo}" 
+	         onclick="PF('dLgfornovo').hide(); tabelaFornecedores.clearFilters();"	         
 	         update=":frmfornecedores:tbfornecedores :msgGlobal"  />
 	         <p:commandButton value="Cancelar" onclick="PF('dLgfornovo').hide();" />
 	        
@@ -61,7 +84,53 @@
 	
 	</p:dialog>
 		
+		<p:dialog widgetVar="dlgforExcluir" closable="false" draggable="false" resizable="false" header="Remover Fornecedores"
+	modal="true" appendTo="@(body)" >
+		  <h:form id="frmforexcluir">
+		  <h:panelGrid id="pnforexcluir" columns="2">
+		     <h:outputText value="Código" />
+		     <h:outputText value="#{MBFornecedores.fornecedores.codigo}" />
+		       
+		        <h:outputText value="Descrição"/>
+		        <h:outputText value="#{MBFornecedores.fornecedores.descricao}" />
+		      		  
+		  </h:panelGrid>
+		  
+		    <h:panelGrid columns="2">
+		      <p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}"
+		       onclick="PF('dlgforExluir').hide(); PF('tabelaFornecedores').clearFilters();"
+		      update=":frmfornecedores:tbfornecedores :msgGlobal"  />
+		     
+		    
+		    
+		    </h:panelGrid>
+		  
+		  </h:form> 
+				</p:dialog>
 		
+		<p:dialog widgetVar="dlgforEditar" closable="false" draggable="false" resizable="false" header="Editar Fornecedores"
+	modal="true" appendTo="@(body)" >
+		  <h:form id="frmforeditar">
+		  <h:panelGrid id="pnforeditar" columns="2">
+		     <h:outputText value="Código" />
+		     <h:outputText value="#{MBFornecedores.fornecedores.codigo}" />
+		       
+		        <h:outputText value="Descrição"/>
+		        <h:inputText value="#{MBFornecedores.fornecedores.descricao}" />
+		      		  
+		      		  
+		  </h:panelGrid>
+		  
+		    <h:panelGrid columns="2">
+		      <p:commandButton value="Editar" actionListener="#{MBFornecedores.editar}" onclick="PF('dlgforeditar').hide();"
+		      update=":frmfornecedores:tbfornecedores :msgGlobal"  />
+		     
+		    
+		    
+		    </h:panelGrid>
+		  
+		  </h:form> 
+				</p:dialog>
 		
 		
 		
