@@ -36,7 +36,7 @@ public class ProdutoDAO {
 		sql.append("SELECT p.codigo, p.descricao, p.quantidade, p.preco,  f.codigo , f.descricao ");
 		sql.append("from produtos p ");
 		sql.append("INNER JOIN fornecedores f ON f.codigo = p.fornecedores_codigo");
-		
+
 		Connection conexao = Conexao.conectar();
 
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
@@ -62,7 +62,6 @@ public class ProdutoDAO {
 		return lista;
 	}
 
-	
 	public void excluir(Produtos produtos) throws SQLException {
 
 		StringBuilder sql = new StringBuilder();
@@ -76,23 +75,25 @@ public class ProdutoDAO {
 		comando.executeUpdate();
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void editar(Produtos produtos) throws SQLException {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE produtos ");
+		sql.append("SET  descricao = ?, preco = ?, quantidade = ?, fornecedores_codigo = ? ");
+		sql.append("WHERE codigo = ? ");
+
+		Connection conexao = Conexao.conectar();
+		PreparedStatement comando = conexao.prepareStatement(sql.toString());
+
+		comando.setString(1, produtos.getDescricao());
+		comando.setDouble(2, produtos.getPreco());
+		comando.setInt(3, produtos.getQuantidade());
+		comando.setInt(4, produtos.getFornecedores().getCodigo());
+		comando.setInt(5, produtos.getCodigo());
+
+		comando.executeUpdate();
+
+	}
+
 }

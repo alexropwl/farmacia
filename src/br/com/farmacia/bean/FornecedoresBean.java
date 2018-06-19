@@ -61,6 +61,7 @@ public class FornecedoresBean {
 	public void preparanovo() {
 
 		fornecedores = new Fornecedores();
+		
 
 	}
 

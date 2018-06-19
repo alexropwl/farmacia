@@ -54,6 +54,7 @@ public class ProdutoDAOTeste {
 	}
 
 	@Test
+	@Ignore
 	public void excluir() throws SQLException {
 
 		Produtos p = new Produtos();
@@ -65,4 +66,48 @@ public class ProdutoDAOTeste {
 
 	}
 
+	
+	@Test
+	public void editar() throws SQLException {
+		
+		Produtos p = new Produtos();
+		p.setCodigo(2);
+		p.setDescricao("analgésico");
+		p.setPreco(10.50);
+		p.setQuantidade(1000);
+		
+		Fornecedores f = new Fornecedores();
+		f.setCodigo(11);
+		p.setFornecedores(f);
+		
+		ProdutoDAO pd = new ProdutoDAO();
+		pd.editar(p);
+
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
