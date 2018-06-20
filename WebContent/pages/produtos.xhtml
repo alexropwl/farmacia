@@ -68,11 +68,17 @@
     </p:column>
     
     <p:column headerText="Editar">
-     <p:commandButton icon="ui-icon-pencil"  >
-		      
-		      </p:commandButton>       
+    <p:commandButton icon= "ui-icon-pencil" oncomplete="PF('pdeditar').show();"
+                      update=":frmeditar:pdeditar :msgGlobal"
+                      actionListener="#{MBProdutos.preparareditar}" >
+                      <f:setPropertyActionListener value="#{item}" target="#{MBProdutos.produtos}"></f:setPropertyActionListener>
+    
+    
+    </p:commandButton>
     
     </p:column>
+    
+    
  
     <f:facet name="footer">
     <p:commandButton value="Novo" oncomplete="PF('pronovo').show();" 
@@ -91,14 +97,16 @@
 	
 	    <h:form id="frmprodnovo">
 	       <h:panelGrid id="pronovo" columns="2">
-	        <p:outputLabel value="Descricao" />
-	        <h:inputText size="30" maxlength="50" value="#{MBProdutos.produtos.descricao}" />	       
+	        <p:outputLabel value="Descricao" for="txtdesc" />
+	        <h:inputText size="30" maxlength="50" value="#{MBProdutos.produtos.descricao}"
+	        required="true" id="txtdesc" />	       
 	              
-	        <p:outputLabel value="Preço" />
-	        <h:inputText size="15" maxlength="50" value="#{MBProdutos.produtos.preco}" />	
+	        <p:outputLabel value="Preço" for="txtpreco" />
+	        <h:inputText size="15" maxlength="50" value="#{MBProdutos.produtos.preco}" id="txtpreco" required="true" />	
 	       
-	       <p:outputLabel value="Quantidade" />
-	        <h:inputText size="15" maxlength="50" value="#{MBProdutos.produtos.quantidade}" />	     
+	       <p:outputLabel value="Quantidade" for="txtquan" />
+	        <h:inputText size="15" maxlength="50" value="#{MBProdutos.produtos.quantidade}" 
+	                     id="txtquan" required="true" />	     
 	         
 	          <p:outputLabel value="Fornecedor" />
 	       
@@ -146,6 +154,51 @@
 		    <h:panelGrid columns="2">
 		      <p:commandButton value="Excluir" actionListener="#{MBProdutos.excluir}"
 		       onclick="PF('pdexcluir').hide() PF('tbprodutos').clearFilters();"
+		      update=":frmprodutos:tbprodutos :msgGlobal"  />
+		     
+		    
+		    
+		    </h:panelGrid>
+		  
+		  </h:form> 
+				</p:dialog>
+				
+				<!-- Dialogo para editar o produto -->
+				
+				<p:dialog widgetVar="pdeditar" closable="false" draggable="false" resizable="false" header="Editar Produtos"
+	modal="true" appendTo="@(body)" >
+		  <h:form id="frmeditar">
+		  <h:panelGrid id="pdeditar" columns="2">
+		     <h:outputText value="Código" />
+		     <h:outputText value="#{MBProdutos.produtos.codigo}" />
+		       
+		        <h:outputText value="Descrição"/>
+		        <h:inputText value="#{MBProdutos.produtos.descricao}" />
+		        
+		        <h:outputText value="Preço"/>
+		        <h:inputText value="#{MBProdutos.produtos.preco}" />
+		      		  
+		      		  <h:outputText value="Quantidade"/>
+		        <h:inputText value="#{MBProdutos.produtos.quantidade}" />
+		        
+		        <h:outputText value="Fornecedor"  />
+		        
+		         <p:selectOneMenu value="#{MBProdutos.produtos.fornecedores.codigo}" filter="true">
+	             <f:selectItems value="#{MBProdutos.comboFornecedores}"
+	             var="item"
+	             itemValue="#{item.codigo}"
+	             itemLabel="#{item.descricao}">
+	                         
+	          	            
+	            </f:selectItems>
+	         
+	         
+	         </p:selectOneMenu>
+		      		  
+		  </h:panelGrid>
+		  
+		    <h:panelGrid columns="2">
+		      <p:commandButton value="Editar" actionListener="#{MBProdutos.editar}" onclick="PF('pdeditar').hide();"
 		      update=":frmprodutos:tbprodutos :msgGlobal"  />
 		     
 		    

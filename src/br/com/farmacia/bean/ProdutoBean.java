@@ -126,9 +126,47 @@ public class ProdutoBean {
 	
 	
 	
+		public void editar() {
+
+			try {
+				ProdutoDAO pd = new ProdutoDAO();
+				pd.editar(produtos);
+
+				itens = pd.listar();
+				JSFUtil.adicionarMensagemSucesso("Editado com sucesso");
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+				JSFUtil.adicionarMensagemErro("Falha na edição, contate o administrador do sistema.");
+
+			}	
+			
+			
+		}
 	
-	
-	
+		public void preparareditar() {
+			
+			try {
+				produtos = new Produtos();
+				FornecedoresDAO fd = new FornecedoresDAO();
+				comboFornecedores = fd.listar();
+					
+					
+					}
+					catch(Exception e) {
+						JSFUtil.adicionarMensagemErro("ex.getMessage()");
+						e.printStackTrace();
+						
+						
+					}
+		
+			
+			
+			
+			
+		}
 	
 	
 	
