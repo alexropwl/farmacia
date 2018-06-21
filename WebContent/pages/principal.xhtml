@@ -14,7 +14,44 @@
 
 	</ui:define>
 	<ui:define name="conteudo">
-		<ui:include src=""></ui:include>
+		<h:form id="frmprodutos">
+	
+	<p:dataTable id="tbprodutos" emptyMessage="Sem registros no momento" value="#{MBProdutos.itens}" var="item" paginator="true"
+	
+	rows="10" filteredValue="#{MBProdutos.itensfiltrados}"
+	
+	widgetVar="tabelaFornecedores" >
+	
+	<f:facet name="header">Lista de Produtos</f:facet>
+   
+      <p:column headerText="Descrição" sortBy="#{item.descricao}" filterBy="#{item.descricao}">
+        
+        <h:outputText value="#{item.descricao}" />
+        
+    </p:column>
+    
+    <p:column headerText="Valor" sortBy="#{item.preco}" filterBy="#{item.preco}">
+        
+        <h:outputText value="#{item.preco}" />
+        
+    </p:column>
+     
+         <p:column headerText="Quantidade" sortBy="#{item.quantidade}" filterBy="#{item.quantidade}">
+        
+        <h:outputText value="#{item.quantidade}" />
+        
+    </p:column>        
+         
+    
+   
+</p:dataTable>
+	  
+	  
+	  </h:form>
+	       
+		
+		
+		
 	</ui:define>
 
 </ui:composition>
